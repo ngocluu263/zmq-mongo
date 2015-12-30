@@ -56,10 +56,11 @@ while True:
     elif deserial['opcode'] == 2:
         passw = deserial['password']
         incomehash = deserial['hash']
-
+        reply = 'None'
         # Request for decode. Need to find record for this file and return payload
         cur = incometask.find_one({'password': passw, 'hash': incomehash})
 
-        reply = cur['payload']
+        if cur is not None:
+            reply = cur['payload']
 
     socket.send_string(reply)
